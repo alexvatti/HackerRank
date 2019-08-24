@@ -1,0 +1,53 @@
+/*
+problem: coredump analysis
+*/
+
+#include<stdio.h>
+#include<stdlib.h>
+typedef struct container{
+	int v;
+	struct container *p;
+}b;
+
+int main()
+{
+	int i;
+	b *head,*temp,*temp1;
+	head=temp=temp1=NULL;
+  
+	scanf("%d",&i);
+	head=(b *)malloc(sizeof(b));
+	if(head==NULL){
+		printk("memmory allocation failed\n");
+		return -1;
+	}
+  	int j;
+  	
+	temp=head;
+  	for(j=0;j<i;j++)
+  	{
+     		temp->p=(b *)malloc(sizeof(b));
+		if(temp->p == NULL) {
+			printf("memory allocation failed\n");
+			return -1;
+		}
+     		scanf("%d", &temp->v);
+     		temp=temp->p;
+  	}
+  	temp1=head;
+  	for(j=0;j<i;j++)
+  	{
+     		printf("%d ",temp1->v);
+     		temp1=temp1->p;
+		
+  	}
+	temp=head;
+	for(j=0;j<i;j++)
+	{
+		temp1=temp->p;
+		free(temp);
+	}
+	free(head);
+	head=temp=temp1=NULL;
+	return 0;
+}
